@@ -412,5 +412,84 @@
       <span>电话：17520143417 ｜ 微信：wzyjy168 ｜ 邮箱：1438641298@qq.com</span>
     </div>
   </footer>
+  <div class="floating-contact" aria-label="快速联系">
+    <button class="float-btn wechat" type="button" data-contact-popup="wechat" aria-label="查看微信">
+      <span>微</span>
+      <strong>微信</strong>
+    </button>
+    <a class="float-btn phone" href="tel:17520143417" aria-label="拨打电话">
+      <span>电</span>
+      <strong>电话</strong>
+    </a>
+    <button class="float-btn qq" type="button" data-contact-popup="qq" aria-label="查看QQ">
+      <span>Q</span>
+      <strong>QQ</strong>
+    </button>
+  </div>
+
+  <div class="contact-popup" id="contact-popup" hidden>
+    <div class="contact-popup-card" role="dialog" aria-modal="true" aria-labelledby="contact-popup-title">
+      <button class="contact-popup-close" type="button" aria-label="关闭弹窗">×</button>
+      <p class="popup-kicker">彩云端定制有限公司</p>
+      <h2 id="contact-popup-title">微信咨询</h2>
+      <p id="contact-popup-copy">添加微信，发送需求图片、尺寸和数量，快速获取定制方案。</p>
+      <div class="popup-value" id="contact-popup-value">wzyjy168</div>
+      <button class="popup-copy" type="button">复制号码</button>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var popup = document.getElementById('contact-popup');
+      var title = document.getElementById('contact-popup-title');
+      var copy = document.getElementById('contact-popup-copy');
+      var value = document.getElementById('contact-popup-value');
+      var close = document.querySelector('.contact-popup-close');
+      var copyButton = document.querySelector('.popup-copy');
+      var data = {
+        wechat: {
+          title: '微信咨询',
+          copy: '添加微信，发送需求图片、尺寸和数量，快速获取定制方案。',
+          value: 'wzyjy168'
+        },
+        qq: {
+          title: 'QQ咨询',
+          copy: '通过QQ沟通漫画展服装、道具、人偶和美陈定制需求。',
+          value: '1438641298'
+        }
+      };
+
+      function openPopup(type) {
+        var item = data[type];
+        if (!item) return;
+        title.textContent = item.title;
+        copy.textContent = item.copy;
+        value.textContent = item.value;
+        popup.hidden = false;
+        copyButton.textContent = '复制号码';
+      }
+
+      document.querySelectorAll('[data-contact-popup]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          openPopup(button.getAttribute('data-contact-popup'));
+        });
+      });
+
+      close.addEventListener('click', function () {
+        popup.hidden = true;
+      });
+
+      popup.addEventListener('click', function (event) {
+        if (event.target === popup) popup.hidden = true;
+      });
+
+      copyButton.addEventListener('click', function () {
+        navigator.clipboard.writeText(value.textContent).then(function () {
+          copyButton.textContent = '已复制';
+        }).catch(function () {
+          copyButton.textContent = '请手动复制';
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
